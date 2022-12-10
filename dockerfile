@@ -3,9 +3,7 @@ FROM richarvey/nginx-php-fpm:1.9.1
 COPY . .
 
 # Install linebot php extension
-RUN docker-php-ext-install sockets \
-    && docker-php-ext-install zip \
-    && docker-php-ext-install gd
+RUN docker-php-ext-install sockets 
 
 # Image config
 ENV SKIP_COMPOSER 1

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 echo "Running composer"
 # composer update 
+composer require linecorp/line-bot-sdk
 composer install --no-dev --working-dir=/var/www/html
 
 echo "Caching config..."

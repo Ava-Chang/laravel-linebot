@@ -2,9 +2,10 @@ FROM richarvey/nginx-php-fpm:1.9.1
 
 COPY . .
 
-# Install php extension
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/bin/
-RUN install-php-extensions zip
+# Install linebot php extension
+RUN docker-php-ext-install sockets \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install gd
 
 # Image config
 ENV SKIP_COMPOSER 1

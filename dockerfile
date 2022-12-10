@@ -2,6 +2,10 @@ FROM richarvey/nginx-php-fpm:1.9.1
 
 COPY . .
 
+# Install php extension
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/bin/
+RUN install-php-extensions zip
+
 # Image config
 ENV SKIP_COMPOSER 1
 ENV WEBROOT /var/www/html/public

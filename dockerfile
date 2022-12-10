@@ -17,4 +17,4 @@ ENV LOG_CHANNEL daily
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-CMD ["/scripts/00-laravel-deploy.sh"]
+CMD ["./scripts/00-laravel-deploy.sh"]

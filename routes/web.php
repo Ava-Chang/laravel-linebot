@@ -14,4 +14,5 @@ use App\Http\Controllers\LineBotController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::post('/callback', [LineBotController::class,'webHook']);
+Route::get('/', [LineBotController::class, 'defaultPage']);
+Route::post('/callback', [LineBotController::class, 'webHook']);

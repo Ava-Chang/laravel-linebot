@@ -65,4 +65,9 @@ class LineBotController extends Controller
             }
         }
     }
+
+    public function defaultPage(Request $request)
+    {
+        return 'This is the Linebot service !';
+    }
 }

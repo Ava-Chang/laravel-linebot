@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use OpenAI;
 use LINE\LINEBot;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
@@ -11,7 +12,6 @@ use Log;
 
 class LineBotController extends Controller
 {
-    private $client;
     private $bot;
     private $channelAccessToken;
     private $channelSecret;
@@ -19,6 +19,7 @@ class LineBotController extends Controller
 
     public function __construct()
     {
+        $this->openAi = OpenAI::client(config('openAi.openAiApiKey')); 
         $this->channelAccessToken = config('linebot.channelAccessToken');
         $this->channelSecret = config('linebot.channelSecret');
         $this->companyGroupID = config('linebot.companyGroupID');
@@ -59,6 +60,14 @@ class LineBotController extends Controller
                             $count = count($foodData);
                             $randFood = $foodData[rand(0, $count-1)];
                             $this->bot->replyMessage($replyToken, new TextMessageBuilder($randFood));
+                        } else {
+                            $result = $this->openAi->completions()->create([
+                                'model' => 'text-davinci-003',
+                                'prompt' => $text,
+                                'max_tokens' => 200,
+                            ]);
+                            $replyMessage = trim($result['choices'][0]['text']);
+                            $this->bot->replyMessage($replyToken, new TextMessageBuilder($replyMessage));
                         }
                     }
                 }
